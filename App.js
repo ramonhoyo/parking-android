@@ -5,8 +5,7 @@
  * @format
  */
 
-import React from 'react';
-import MyButton from './src/components/MyButton';
+import React, { useEffect }from 'react';
 import { ThemeProvider } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-multi-lang';
@@ -25,6 +24,7 @@ import SplashScreen from './src/screens/SplashScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { RESULTS } from 'react-native-permissions';
+import auth from '@react-native-firebase/auth';
 
 const Stack = createNativeStackNavigator();
 
