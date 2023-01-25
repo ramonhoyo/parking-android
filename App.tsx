@@ -24,6 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import MyButton from './src/components/MyButton';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -67,6 +68,12 @@ function App(): JSX.Element {
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <MyButton
+        onPress={() => {
+          throw new Error('Function not implemented.');
+        }}
+        text="hellow"
       />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"

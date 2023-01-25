@@ -10,8 +10,16 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^16.5.2",
+    "@react-native-firebase/functions": "^16.5.2",
+    "date-fns": "^2.29.3",
     "react": "18.2.0",
-    "react-native": "0.71.1"
+    "react-multi-lang": "^2.2.0",
+    "react-native": "0.71.1",
+    "react-native-linear-gradient": "^2.6.2",
+    "react-native-vector-icons": "^9.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
