@@ -4,7 +4,7 @@ import { primaryColor, white } from '../data/consts';
 import MyButton from '../components/MyButton';
 import MyItemList from '../components/MyItemList';
 import { useTranslation } from 'react-multi-lang';
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 /**
  * Pagina de información con detalles de la aplicación, versión, autores

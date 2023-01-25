@@ -14,7 +14,7 @@ import { useTranslation } from 'react-multi-lang';
 import MyButton from '../components/MyButton';
 import { RECORDS_STATUS, SLOT_STATUS, VEHICULE_STATUS } from '../data/consts';
 import { differenceInHours, format } from 'date-fns';
-import stripe from 'tipsi-stripe';
+// import stripe from 'tipsi-stripe';
 import { Alert } from 'react-native';
 import functions from '@react-native-firebase/functions';
 import { updateVehicule } from '../data/app/appSlice';
@@ -22,9 +22,9 @@ import { updateVehicule } from '../data/app/appSlice';
 /**
  * @brief asignar la clave pública de stripe
  */
-stripe.setOptions({
-  publishableKey: 'pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP',
-});
+// stripe.setOptions({
+//   publishableKey: 'pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP',
+// });
 
 /**
  * @brief Página para realizar el pago de la deuda total
@@ -97,24 +97,24 @@ export default function PaymentTicketScreen(props) {
    * Muestra un modal para que el usuario introduzca los datos de su tarjeta para realizar el pago
    */
   const handleCardPayPress = async () => {
-    try {
-      setLoading(true);
-      const stripeToken = await stripe.paymentRequestWithCardForm({
-        // Only iOS support this options
-        smsAutofillDisabled: true,
-        requiredBillingAddressFields: 'full',
-        prefilledInformation: {
-          billingAddress: {
-            name: user.displayName,
-            email: user.email,
-          },
-        },
-      });
-      completePayment(stripeToken);
-    } catch (error) {
-      Alert.alert('', t('payment_token_error'));
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   const stripeToken = await stripe.paymentRequestWithCardForm({
+    //     // Only iOS support this options
+    //     smsAutofillDisabled: true,
+    //     requiredBillingAddressFields: 'full',
+    //     prefilledInformation: {
+    //       billingAddress: {
+    //         name: user.displayName,
+    //         email: user.email,
+    //       },
+    //     },
+    //   });
+    //   completePayment(stripeToken);
+    // } catch (error) {
+    //   Alert.alert('', t('payment_token_error'));
+    //   setLoading(false);
+    // }
   };
 
   if (!record) {

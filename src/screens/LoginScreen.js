@@ -19,7 +19,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useTranslation } from 'react-multi-lang';
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 /**
  * @brief Pagina de login de la aplicación
