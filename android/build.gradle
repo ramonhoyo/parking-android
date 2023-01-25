@@ -15,7 +15,26 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath('com.android.tools.build:gradle:7.4.0')
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("com.google.gms:google-services:4.3.14")
     }
+}
+
+project.ext {
+  set('react-native', [
+    versions: [
+      // Overriding Build/Android SDK Versions
+      android : [
+        minSdk    : 19,
+        targetSdk : 33,
+        compileSdk: 33,
+      ],
+      // Overriding Library SDK Versions
+      firebase: [
+        // Override Firebase SDK Version
+        bom           : "31.1.1"
+      ],
+    ],
+  ])
 }

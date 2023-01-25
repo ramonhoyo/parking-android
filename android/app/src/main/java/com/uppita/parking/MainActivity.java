@@ -1,4 +1,4 @@
-package com.parking_app_upgraded;
+package com.uppita.parking;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

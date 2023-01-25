@@ -8,7 +8,7 @@
 import React, { useEffect }from 'react';
 import { ThemeProvider } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-multi-lang';
+import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
 import HomeScreen from './src/screens/HomeScreen';
 import EditScreen from './src/screens/EditScreen';
 import PaymentTicketScreen from './src/screens/PaymentTicketScreen';
@@ -23,8 +23,17 @@ import PermissionsScreen from './src/screens/PermissionsScreen';
 import SplashScreen from './src/screens/SplashScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { RESULTS } from 'react-native-permissions';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { setPermissions, setSlots, setUser, setVehicules } from './src/data/app/appSlice';
+import { Alert } from 'react-native/Libraries/Alert/Alert';
+import { setAuthId, setIsLoading } from './src/data/auth/authSlice';
+import es from './src/assests/langs/es.json';
+
+// Do this two lines only when setting up the application
+setTranslations({es});
+setDefaultLanguage('es');
 
 const Stack = createNativeStackNavigator();
 

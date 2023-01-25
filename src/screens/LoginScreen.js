@@ -20,6 +20,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useTranslation } from 'react-multi-lang';
 
 var pkg = require('../../package.json');
+const background = require('../assests/images/background.jpg');
 
 /**
  * @brief Pagina de login de la aplicación
@@ -75,7 +76,7 @@ export default function LoginScreen() {
       <ImageBackground
         style={styles.img}
         resizeMode="cover"
-        source={require('../assests/images/background.jpg')}
+        source={background}
       />
       <Text style={styles.version}>V{pkg.version}</Text>
       <Text style={styles.ing}>{t('telematics_engineering')}</Text>

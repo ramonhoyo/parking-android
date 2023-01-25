@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "702719306143",
+    "project_id": "upiita-project",
+    "storage_bucket": "upiita-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702719306143:android:8d7e9a51d4bcf21e76f5aa",
+        "android_client_info": {
+          "package_name": "com.uppita.parking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702719306143-bec5jkca89d7il5jjncuq7ebu3gcqavk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uppita.parking",
+            "certificate_hash": "a5fbb65e0dc1993b18f4b5410a7af2ce371af174"
+          }
+        },
+        {
+          "client_id": "702719306143-pg9upmpuqte1dv69frhea6t6q79j6mr9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uppita.parking",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "702719306143-ltgaimrc12dk4oi2k23tclkblrk74f34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKB1Osz6TeiOLXZT65FKSFO3dpVweapo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702719306143-ltgaimrc12dk4oi2k23tclkblrk74f34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
