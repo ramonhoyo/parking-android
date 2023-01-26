@@ -9,7 +9,12 @@ import {
   Button,
   Image,
 } from 'react-native';
-import MapView, {Polygon, Marker, Polyline } from 'react-native-maps';
+import MapView, {
+  Polygon,
+  Marker,
+  Polyline,
+  enableLatestRenderer,
+} from 'react-native-maps';
 import {
   primaryColor,
   parkingArea,
@@ -32,6 +37,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import OptionsMenu from 'react-native-option-menu';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyDReKvswx1eJLH3J5mdavJrPOGL8fzSNTA';
+enableLatestRenderer();
 var polyline = require('@mapbox/polyline');
 const geolib = require('geolib');
 
@@ -344,7 +350,7 @@ export default function ParkingMap(props) {
       },
     );
     return () => Geolocation.clearWatch(watcherId); // limpia el vigilante de posición
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emulable, dispatch]);
 
   const emulateCarEntry = async () => {
@@ -481,11 +487,7 @@ export default function ParkingMap(props) {
           />
         </Marker>
 
-        <Polyline
-          coordinates={route}
-          strokeWidth={2}
-          strokeColor="red"
-        />
+        <Polyline coordinates={route} strokeWidth={2} strokeColor="red" />
       </MapView>
 
       <MyButton
@@ -507,7 +509,7 @@ export default function ParkingMap(props) {
         title={t('open_in_google_maps')}
       />
 
-      <ProcessModal visible={showModal} />
+      {showModal && <ProcessModal visible={showModal} />}
     </View>
   );
 }

@@ -232,7 +232,7 @@ export default function EditScreen(props) {
         disabled={!vehicule.matricule || !vehicule.fabricant || !vehicule.model}
       />
 
-      <ProcessModal visible={showModal} />
+      {showModal && <ProcessModal visible={showModal} />}
     </KeyboardAwareScrollView>
   );
 }

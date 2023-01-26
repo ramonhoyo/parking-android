@@ -221,7 +221,7 @@ export default function CarCurrentStatus(props) {
         />
       )}
 
-      <ProcessModal visible={showModal} />
+      {showModal && <ProcessModal visible={showModal} />}
 
       <Modal
         style={styles.centeredView}
