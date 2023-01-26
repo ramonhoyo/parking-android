@@ -9,7 +9,7 @@ import {
   Button,
   Image,
 } from 'react-native';
-import MapView, {Polygon, Marker} from 'react-native-maps';
+import MapView, {Polygon, Marker, Polyline } from 'react-native-maps';
 import {
   primaryColor,
   parkingArea,
@@ -481,7 +481,7 @@ export default function ParkingMap(props) {
           />
         </Marker>
 
-        <MapView.Polyline
+        <Polyline
           coordinates={route}
           strokeWidth={2}
           strokeColor="red"
