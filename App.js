@@ -26,7 +26,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { setPermissions, setSlots, setUser, setVehicules } from './src/data/app/appSlice';
+import functions from '@react-native-firebase/functions';
+import { setPermissions, setRecords, setSlots, setUser, setVehicules } from './src/data/app/appSlice';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { setAuthId, setIsLoading } from './src/data/auth/authSlice';
 import es from './src/assests/langs/es.json';
@@ -34,6 +35,11 @@ import es from './src/assests/langs/es.json';
 // Do this two lines only when setting up the application
 setTranslations({es});
 setDefaultLanguage('es');
+
+if (__DEV__) {
+  // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
+  functions().useEmulator('localhost', 5002);
+}
 
 const Stack = createNativeStackNavigator();
 

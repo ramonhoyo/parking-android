@@ -199,7 +199,7 @@ export default function ParkingMap(props) {
   useEffect(() => {
     if (destination) {
       const slot = slots.find(it => it.id === destination.slot);
-      if (slot) {
+      if (slot) { 
         getDirections(car_status.location, slot);
       }
     }
