@@ -31,6 +31,7 @@ import { setPermissions, setRecords, setSlots, setUser, setVehicules } from './s
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { setAuthId, setIsLoading } from './src/data/auth/authSlice';
 import es from './src/assests/langs/es.json';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 // Do this two lines only when setting up the application
 setTranslations({es});
@@ -264,7 +265,11 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <NavigationContainer>{stack}</NavigationContainer>
+      <StripeProvider
+        publishableKey='pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP'
+      >
+        <NavigationContainer>{stack}</NavigationContainer>
+      </StripeProvider>
     </ThemeProvider>
   );
 };
