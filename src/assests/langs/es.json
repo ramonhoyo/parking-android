@@ -148,5 +148,7 @@
   "paid_time": "Hora de pago",
   "reg_date": "Hora de registro",
   "vehicule already exists": "La matricula ya está registrada",
-  "last_payment_date": "Último pago"
+  "last_payment_date": "Último pago",
+  "are_you_sure_of_logout": "¿Está seguro de cerrar sesión?",
+  "logout": "Cerrar sesión"
 }

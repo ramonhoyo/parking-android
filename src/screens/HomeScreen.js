@@ -1,16 +1,23 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { View, Text, StatusBar, StyleSheet, ScrollView, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StatusBar,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
-import { beginColor, endColor, white } from '../data/consts';
+import {beginColor, endColor, white} from '../data/consts';
 import CarInfoHome from '../components/CarInfoHome';
 import CarCurrentStatus from '../components/CarCurrentStatus';
 import HomeOptionsCard from '../components/HomeOptionsCard';
-import { GoogleSignin } from 'react-native-google-signin';
-import { logout } from '../data/auth/authSlice';
-import { useTranslation } from 'react-multi-lang';
+import {GoogleSignin} from 'react-native-google-signin';
+import {logout} from '../data/auth/authSlice';
+import {useTranslation} from 'react-multi-lang';
 
 /**
  * @brief Pantalla principal de la aplicación una vez se ha ingresado con credenciales
@@ -25,33 +32,53 @@ export default function HomeScreen(props) {
    * Maneja el log out
    */
   const handleLogout = async () => {
+    Alert.alert(t('logout'), t('are_you_sure_of_logout'), [
+      {text: t('no'), style: 'cancel'},
+      {text: t('yes'), onPress: confirmLogout},
+    ]);
+  };
+
+  const confirmLogout = async () => {
     try {
       await auth().signOut();
-      if ((await GoogleSignin.isSignedIn())) {
+      if (await GoogleSignin.isSignedIn()) {
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
       }
       dispatch(logout());
     } catch (e) {
-      Alert.alert('', t('error_logout_fail', { error: e }));
+      Alert.alert('', t('error_logout_fail', {error: e}));
     }
   };
 
   return (
     <View style={styles.root}>
-      <StatusBar backgroundColor="#0000" barStyle="light-content" translucent={true} />
+      <StatusBar
+        backgroundColor="#0000"
+        barStyle="light-content"
+        translucent={true}
+      />
       <LinearGradient
         style={styles.headerWrapper}
         colors={[beginColor, endColor]}
       />
-      <Icon name="sign-out" size={30} color={white} style={styles.logout}
+      <Icon
+        name="sign-out"
+        size={30}
+        color={white}
+        style={styles.logout}
         onPress={handleLogout}
       />
       <Text style={styles.title}>{t('UPPITA_parking')}</Text>
       <View style={styles.wrapper}>
         <ScrollView style={styles.scroll}>
-          <CarInfoHome onEditClick={() => props.navigation.navigate('ManageVehicules')} />
-          <CarCurrentStatus style={styles.carStatusCar} onPayTicketClick={() => props.navigation.navigate('Ticket')} />
+          <CarInfoHome
+            onEditClick={() => props.navigation.navigate('ManageVehicules')}
+          />
+          <CarCurrentStatus
+            style={styles.carStatusCar}
+            onPayTicketClick={() => props.navigation.navigate('Ticket')}
+          />
           <HomeOptionsCard
             style={styles.options}
             onQueryClick={() => props.navigation.navigate('Query')}

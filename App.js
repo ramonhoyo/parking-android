@@ -5,10 +5,14 @@
  * @format
  */
 
-import React, { useEffect }from 'react';
-import { ThemeProvider } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import React, {useEffect} from 'react';
+import {ThemeProvider} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
 import HomeScreen from './src/screens/HomeScreen';
 import EditScreen from './src/screens/EditScreen';
 import PaymentTicketScreen from './src/screens/PaymentTicketScreen';
@@ -21,17 +25,23 @@ import ManageVehicules from './src/screens/ManageVehicules';
 import LoginScreen from './src/screens/LoginScreen';
 import PermissionsScreen from './src/screens/PermissionsScreen';
 import SplashScreen from './src/screens/SplashScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
-import { setPermissions, setRecords, setSlots, setUser, setVehicules } from './src/data/app/appSlice';
-import { Alert } from 'react-native/Libraries/Alert/Alert';
-import { setAuthId, setIsLoading } from './src/data/auth/authSlice';
+import {
+  setPermissions,
+  setRecords,
+  setSlots,
+  setUser,
+  setVehicules,
+} from './src/data/app/appSlice';
+import {Alert} from 'react-native/Libraries/Alert/Alert';
+import {setAuthId, setIsLoading} from './src/data/auth/authSlice';
 import es from './src/assests/langs/es.json';
-import { StripeProvider } from '@stripe/stripe-react-native';
+import {StripeProvider} from '@stripe/stripe-react-native';
 
 // Do this two lines only when setting up the application
 setTranslations({es});
@@ -164,12 +174,10 @@ const App = () => {
 
   useEffect(() => {
     const unsubscriberAuth = auth().onAuthStateChanged(onAuthStateChanged);
-    const unsubscriberSlots = firestore()
-      .collection('slots')
-      .onSnapshot({
-        error: handleFirebaseError,
-        next: handleSlotsSnapshot,
-      });
+    const unsubscriberSlots = firestore().collection('slots').onSnapshot({
+      error: handleFirebaseError,
+      next: handleSlotsSnapshot,
+    });
     check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
       .then(result => {
         dispatch(
@@ -188,48 +196,50 @@ const App = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (authId) {
-      const vehiculesUnsubscriber = firestore()
-        .collection('vehicules')
-        .where('owner', '==', authId)
-        .where('status', '>=', 0)
-        .onSnapshot(snapshot => {
-          if (!snapshot) {
-            return;
-          }
-          dispatch(
-            setVehicules(
-              snapshot.docs.map(docSnapshot => {
-                const data = docSnapshot.data();
-                return {
-                  ...data,
-                  entryDate: data.entryDate ? data.entryDate.toMillis() : null,
-                  exitDate: data.exitDate ? data.exitDate.toMillis() : null,
-                  lastPaymentDate: data.lastPaymentDate
-                    ? data.lastPaymentDate.toMillis()
-                    : null,
-                  id: docSnapshot.id,
-                };
-              }),
-            ),
-          );
-        });
-
-      const subscriber = firestore()
-        .doc(`users/${authId}`)
-        .onSnapshot(snapshot => {
-          if (snapshot && snapshot.exists) {
-            dispatch(setUser(snapshot.data()));
-          } else {
-            dispatch(setUser(null));
-          }
-        });
-
-      return () => {
-        subscriber();
-        vehiculesUnsubscriber();
-      };
+    if (!authId) {
+      dispatch(setUser(null));
+      return;
     }
+    const vehiculesUnsubscriber = firestore()
+      .collection('vehicules')
+      .where('owner', '==', authId)
+      .where('status', '>=', 0)
+      .onSnapshot(snapshot => {
+        if (!snapshot) {
+          return;
+        }
+        dispatch(
+          setVehicules(
+            snapshot.docs.map(docSnapshot => {
+              const data = docSnapshot.data();
+              return {
+                ...data,
+                entryDate: data.entryDate ? data.entryDate.toMillis() : null,
+                exitDate: data.exitDate ? data.exitDate.toMillis() : null,
+                lastPaymentDate: data.lastPaymentDate
+                  ? data.lastPaymentDate.toMillis()
+                  : null,
+                id: docSnapshot.id,
+              };
+            }),
+          ),
+        );
+      });
+
+    const userUnsubscriber = firestore()
+      .doc(`users/${authId}`)
+      .onSnapshot(snapshot => {
+        if (snapshot && snapshot.exists) {
+          dispatch(setUser(snapshot.data()));
+        } else {
+          dispatch(setUser(null));
+        }
+      });
+
+    return () => {
+      userUnsubscriber();
+      vehiculesUnsubscriber();
+    };
   }, [authId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -265,9 +275,7 @@ const App = () => {
 
   return (
     <ThemeProvider>
-      <StripeProvider
-        publishableKey='pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP'
-      >
+      <StripeProvider publishableKey="pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP">
         <NavigationContainer>{stack}</NavigationContainer>
       </StripeProvider>
     </ThemeProvider>
