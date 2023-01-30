@@ -14,13 +14,6 @@ import functions from '@react-native-firebase/functions';
 import {updateVehicule} from '../data/app/appSlice';
 
 /**
- * @brief asignar la clave pública de stripe
- */
-// stripe.setOptions({
-//   publishableKey: 'pk_test_51I319RK7Vp8OVljsnrdAwRJbnaAzK2gGuKiOTZCb4FL70o8tuoTKXjqhGCVE1IdkQYMBotR0SecvPAKEjZYnOfwp00I41jSfdP',
-// });
-
-/**
  * @brief Página para realizar el pago de la deuda total
  * @param {Object} props properties
  * @returns retorna un ReactNode
