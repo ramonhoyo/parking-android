@@ -488,13 +488,6 @@ export default function ParkingMap(props) {
         loading={rasberryEmulation}
       />
 
-      <Button
-        style={styles.openInMaps}
-        color={'#bdc3c7'}
-        onPress={openExternalMaps}
-        title={t('open_in_google_maps')}
-      />
-
       {showModal && <ProcessModal visible={showModal} />}
     </View>
   );
@@ -529,12 +522,6 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 50,
-  },
-
-  openInMaps: {
-    position: 'absolute',
-    top: 50,
-    right: 5,
   },
 
   rasberryButton: {
