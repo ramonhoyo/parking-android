@@ -29,7 +29,6 @@ import {
 } from '../data/app/appSlice';
 import functions from '@react-native-firebase/functions';
 import {useTranslation} from 'react-multi-lang';
-import {getErrorTitle} from '../utilities/utils';
 import MyButton from '../components/MyButton';
 import ProcessModal from '../components/ProcessModal';
 import Geolocation from 'react-native-geolocation-service';
@@ -80,14 +79,10 @@ export default function ParkingMap(props) {
   const handleReserveSlot = async slot => {
     try {
       setShowModal(true);
-      const {data} = await functions().httpsCallable('reserveSlot')({
+      await functions().httpsCallable('reserveSlot')({
         vehicule: vehicule.id,
         slot: slot.id,
       });
-      if (data.error) {
-        Alert.alert(getErrorTitle(data.error), t(data.errorMessage));
-        return;
-      }
       dispatch(
         setVehicules(
           vehicules.map(item => {
@@ -102,7 +97,7 @@ export default function ParkingMap(props) {
         ),
       );
     } catch (e) {
-      Alert.alert(t('error'), t('unable_to_create_record'));
+      Alert.alert(t('unable_to_create_record'), t(e.message));
     } finally {
       setShowModal(false);
     }
@@ -199,7 +194,7 @@ export default function ParkingMap(props) {
   useEffect(() => {
     if (destination) {
       const slot = slots.find(it => it.id === destination.slot);
-      if (slot) { 
+      if (slot) {
         getDirections(car_status.location, slot);
       }
     }
@@ -353,31 +348,6 @@ export default function ParkingMap(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emulable, dispatch]);
 
-  const emulateCarEntry = async () => {
-    try {
-      setShowModal(true);
-      const {data} = await functions().httpsCallable('changeVehiculeStatus')({
-        matricule: vehicule.matricule,
-        status: 'entry',
-      });
-      if (data.error) {
-        Alert.alert(t(getErrorTitle(data.error)), t(data.errorMessage));
-        return;
-      }
-      dispatch(
-        updateVehicule({
-          ...vehicule,
-          entryDate: Date.now(),
-        }),
-      );
-      Alert.alert('', t('entry_date_registered'));
-    } catch (e) {
-      Alert.alert('', t('entry_date_registered_error'));
-    } finally {
-      setShowModal(false);
-    }
-  };
-
   const clearSlotData = async () => {
     try {
       setShowModal(true);
@@ -390,26 +360,43 @@ export default function ParkingMap(props) {
     }
   };
 
+  const emulateCarEntry = async () => {
+    try {
+      setShowModal(true);
+      await functions().httpsCallable('changeVehiculeStatus')({
+        matricule: vehicule.matricule,
+        status: 'entry',
+      });
+      dispatch(
+        updateVehicule({
+          ...vehicule,
+          entryDate: Date.now(),
+        }),
+      );
+      Alert.alert('', t('entry_date_registered'));
+    } catch (e) {
+      Alert.alert(t('entry_date_registered_error'), t(e.message));
+    } finally {
+      setShowModal(false);
+    }
+  };
+
   const emulateCarExit = async () => {
     try {
       setShowModal(true);
-      const {data} = await functions().httpsCallable('changeVehiculeStatus')({
+      await functions().httpsCallable('changeVehiculeStatus')({
         matricule: vehicule.matricule,
         status: 'exit',
       });
-      if (data.error) {
-        Alert.alert(t(getErrorTitle(data.error), t(data.errorMessage)));
-        return;
-      }
       dispatch(
         updateVehicule({
           ...vehicule,
           exitDate: Date.now(),
         }),
       );
-      Alert.alert(t('exit_date_registered'));
+      Alert.alert('', t('exit_date_registered'));
     } catch (e) {
-      Alert.alert(t('exit_date_registered_error'));
+      Alert.alert(t('exit_date_registered_error'), t(e.message));
     } finally {
       setShowModal(false);
     }
@@ -427,7 +414,6 @@ export default function ParkingMap(props) {
             t('emulate_car_entry'),
             t('emulate_car_exit'),
             t('clear_slot_data'),
-            t(''),
           ]}
           actions={[emulateCarEntry, emulateCarExit, clearSlotData]}
         />

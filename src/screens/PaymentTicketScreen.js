@@ -21,7 +21,7 @@ import {updateVehicule} from '../data/app/appSlice';
 export default function PaymentTicketScreen(props) {
   const t = useTranslation();
   const dispatch = useDispatch();
-  const {confirmPayment, initPaymentSheet, presentPaymentSheet} = useStripe();
+  const { initPaymentSheet, presentPaymentSheet} = useStripe();
   const {user} = useSelector(state => state.app);
   const {car_status, records, vehicule} = useSelector(state => state.app);
 
@@ -64,9 +64,6 @@ export default function PaymentTicketScreen(props) {
       return;
     }
     emulateRasberryCall();
-    await functions().httpsCallable('completePayment')({
-      record: record.id,
-    });
     dispatch(
       updateVehicule({
         ...vehicule,

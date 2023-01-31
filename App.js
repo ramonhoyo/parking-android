@@ -251,13 +251,9 @@ const App = () => {
         const {data} = await functions().httpsCallable('getRecords')({
           vehicule: vehicule.id,
         });
-        if (data.error) {
-          Alert.alert(getErrorTitle(data.error), t(data.errorMessage));
-          return;
-        }
         dispatch(setRecords(data));
       } catch (e) {
-        Alert.alert(t('error_getting_records'), `${e}`);
+        Alert.alert(t(e.code), t(e.message));
       }
     })();
   }, [vehicule]); // eslint-disable-line react-hooks/exhaustive-deps

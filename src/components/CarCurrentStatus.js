@@ -13,7 +13,7 @@ import CardView from './CardView';
 import MyButton from './MyButton';
 import MyItemList from './MyItemList';
 import {useTranslation} from 'react-multi-lang';
-import {getErrorTitle, getRecordStatus} from '../utilities/utils';
+import {getRecordStatus} from '../utilities/utils';
 import {differenceInHours, format} from 'date-fns';
 import {
   primaryColor,
@@ -50,10 +50,6 @@ export default function CarCurrentStatus(props) {
       const {data} = await functions().httpsCallable('annulReservation')({
         record: activeRecord.id,
       });
-      if (data.error) {
-        Alert.alert(getErrorTitle(data.error), t(data.errorMessage));
-        return;
-      }
       Alert.alert(t('record_annuled'));
       dispatch(
         setVehicules(
@@ -69,7 +65,7 @@ export default function CarCurrentStatus(props) {
         ),
       );
     } catch (e) {
-      Alert.alert(t('error_annuling_record'), t('error_annuling_record_desc'));
+      Alert.alert(t('error_annuling_record'), t(e.message));
     } finally {
       setShowModal(false);
     }
@@ -93,9 +89,6 @@ export default function CarCurrentStatus(props) {
       const {data} = await functions().httpsCallable('annulReservation')({
         record: activeRecord.id,
       });
-      if (data.error) {
-        Alert.alert(getErrorTitle(data.error), t(data.errorMessage));
-      }
       dispatch(
         updateRecord({
           ...activeRecord,
@@ -110,7 +103,7 @@ export default function CarCurrentStatus(props) {
       );
       Alert.alert(t('record_annuled'), t('select_another_slot'));
     } catch (e) {
-      Alert.alert(t('error'), t('error_annuling_record'));
+      Alert.alert(t('error_annuling_record'), t(e.message));
     } finally {
       setNetworkRequest(false);
     }
@@ -119,12 +112,9 @@ export default function CarCurrentStatus(props) {
   const handleConfirmSlot = async () => {
     try {
       setNetworkRequest(true);
-      const {data} = await functions().httpsCallable('confirmSlot')({
+      await functions().httpsCallable('confirmSlot')({
         record: activeRecord.id,
       });
-      if (data.error) {
-        Alert.alert(getErrorTitle(data.error), t(data.errorMessage));
-      }
       dispatch(
         updateRecord({
           ...activeRecord,
@@ -133,7 +123,7 @@ export default function CarCurrentStatus(props) {
       );
       Alert.alert(t(''), t('slot_confirmed'));
     } catch (e) {
-      Alert.alert(t('error'), t('error_annuling_record'));
+      Alert.alert(t('error_annuling_record'), t(e.message));
     } finally {
       setNetworkRequest(false);
     }

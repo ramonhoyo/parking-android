@@ -2,32 +2,6 @@ import {t} from 'react-multi-lang';
 import {ERRORS, RECORDS_STATUS, VEHICULE_STATUS} from '../data/consts';
 
 /**
- * @brief convierte una instancia de ERRORS en una cadena legible
- * @param {ERRORS} error instancia de ERRORS
- * @returns retorna la traducción del error
- */
-export const getErrorTitle = error => {
-  switch (error) {
-    case ERRORS.INVALID_PARAMS:
-      return t('invalid_params');
-    case ERRORS.INVALID_STATUS:
-      return t('invalid_status');
-    case ERRORS.NOT_REF_FOUND:
-      return t('not_ref_found');
-    case ERRORS.UNAUTHENTICATED:
-      return t('unauthenticated');
-    case ERRORS.PAYMENT_ERROR:
-      return t('payment_error');
-    case ERRORS.NOT_FOUND:
-      return t('not_ref_found');
-    case ERRORS.FAILED_PRECONDITION:
-      return t('failed_precondition');
-    default:
-      return t('unhandled_error');
-  }
-};
-
-/**
  * @brief formatea el estatus de un vehiculo a un texto legible
  * @param {VEHICULE_STATUS} status estatus del vehiculo
  * @returns estatus como texto
