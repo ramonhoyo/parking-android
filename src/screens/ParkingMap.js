@@ -172,15 +172,12 @@ export default function ParkingMap(props) {
   const handleRasberryClick = async () => {
     try {
       setRasberryEmulation(true);
-      const response = await functions().httpsCallable('emulateRasberryCall')({
+      await functions().httpsCallable('emulateRasberryCall')({
         slot: destination.slot,
         status: SLOT_STATUS.BUSSY,
       });
-      if (response.data.error) {
-        throw new Error(response.data.errorMessage);
-      }
     } catch (error) {
-      Alert.alert(t('error_emulating_rasberry_call'), `${error}`);
+      Alert.alert(t('error_emulating_rasberry_call'), `${e.message}`);
     } finally {
       setRasberryEmulation(false);
     }
@@ -404,7 +401,7 @@ export default function ParkingMap(props) {
 
   const myIcon = <Icon name="ellipsis-v" size={24} style={styles.moreButton} />;
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <OptionsMenu
@@ -535,6 +532,7 @@ const styles = StyleSheet.create({
     marginRight: 4,
     paddingRight: 4,
     paddingLeft: 4,
+    color: '#000'
   },
 
   carMarker: {

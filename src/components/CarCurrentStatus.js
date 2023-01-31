@@ -47,7 +47,7 @@ export default function CarCurrentStatus(props) {
   const handleAnnulReservation = async () => {
     try {
       setShowModal(true);
-      const {data} = await functions().httpsCallable('annulReservation')({
+      await functions().httpsCallable('annulReservation')({
         record: activeRecord.id,
       });
       Alert.alert(t('record_annuled'));
@@ -86,7 +86,7 @@ export default function CarCurrentStatus(props) {
   const handleCancelRecord = async () => {
     try {
       setNetworkRequest(true);
-      const {data} = await functions().httpsCallable('annulReservation')({
+      await functions().httpsCallable('annulReservation')({
         record: activeRecord.id,
       });
       dispatch(

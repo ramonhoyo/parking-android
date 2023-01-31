@@ -21,7 +21,7 @@ import {updateVehicule} from '../data/app/appSlice';
 export default function PaymentTicketScreen(props) {
   const t = useTranslation();
   const dispatch = useDispatch();
-  const { initPaymentSheet, presentPaymentSheet} = useStripe();
+  const {initPaymentSheet, presentPaymentSheet} = useStripe();
   const {user} = useSelector(state => state.app);
   const {car_status, records, vehicule} = useSelector(state => state.app);
 
@@ -40,15 +40,12 @@ export default function PaymentTicketScreen(props) {
   const emulateRasberryCall = async () => {
     try {
       setRasberryEmulation(true);
-      const response = await functions().httpsCallable('emulateRasberryCall')({
+      await functions().httpsCallable('emulateRasberryCall')({
         slot: record.slot,
         status: SLOT_STATUS.IDLE,
       });
-      if (response.data.error) {
-        throw new Error(response.data.errorMessage);
-      }
     } catch (error) {
-      Alert.alert(t('error_emulating_rasberry_call'), `${error}`);
+      Alert.alert(t('error_emulating_rasberry_call'), `${error.message}`);
     } finally {
       setRasberryEmulation(false);
     }
