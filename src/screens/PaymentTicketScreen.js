@@ -96,7 +96,7 @@ export default function PaymentTicketScreen(props) {
       },
     });
     if (error) {
-      Alert.alert(t('error_initializing_stripe'));
+      Alert.alert(t('error_initializing_stripe'), t('error.message'));
       props.navigation.pop();
     }
     setLoading(false);

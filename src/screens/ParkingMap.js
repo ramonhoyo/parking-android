@@ -146,7 +146,7 @@ export default function ParkingMap(props) {
       }));
       setRoute(_route);
     } catch (error) {
-      Alert.alert(t('error'), error);
+      Alert.alert(t('error'), t(error.message));
       return error;
     }
   };
@@ -177,7 +177,7 @@ export default function ParkingMap(props) {
         status: SLOT_STATUS.BUSSY,
       });
     } catch (error) {
-      Alert.alert(t('error_emulating_rasberry_call'), `${e.message}`);
+      Alert.alert(t('error_emulating_rasberry_call'), `${error.message}`);
     } finally {
       setRasberryEmulation(false);
     }
@@ -349,9 +349,9 @@ export default function ParkingMap(props) {
     try {
       setShowModal(true);
       await functions().httpsCallable('clearAllSlots')();
-      Alert.alert(t('all_data_cleared'));
+      Alert.alert('', t('all_data_cleared'));
     } catch (e) {
-      Alert.alert(t('all_data_cleared_error'));
+      Alert.alert(t('all_data_cleared_error'), t(e.message));
     } finally {
       setShowModal(false);
     }
@@ -411,6 +411,7 @@ export default function ParkingMap(props) {
             t('emulate_car_entry'),
             t('emulate_car_exit'),
             t('clear_slot_data'),
+            t(''),
           ]}
           actions={[emulateCarEntry, emulateCarExit, clearSlotData]}
         />
@@ -532,7 +533,6 @@ const styles = StyleSheet.create({
     marginRight: 4,
     paddingRight: 4,
     paddingLeft: 4,
-    color: '#000'
   },
 
   carMarker: {

@@ -103,6 +103,5 @@ const styles = StyleSheet.create({
     margin: 16,
   },
   button: {
-    padding: 8,
   },
 });

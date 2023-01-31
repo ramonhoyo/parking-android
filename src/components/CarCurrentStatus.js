@@ -50,7 +50,7 @@ export default function CarCurrentStatus(props) {
       await functions().httpsCallable('annulReservation')({
         record: activeRecord.id,
       });
-      Alert.alert(t('record_annuled'));
+      Alert.alert('', t('record_annuled'));
       dispatch(
         setVehicules(
           vehicules.map(item => {
@@ -121,7 +121,7 @@ export default function CarCurrentStatus(props) {
           status: RECORDS_STATUS.CONFIRMED,
         }),
       );
-      Alert.alert(t(''), t('slot_confirmed'));
+      Alert.alert('', t('slot_confirmed'));
     } catch (e) {
       Alert.alert(t('error_annuling_record'), t(e.message));
     } finally {
