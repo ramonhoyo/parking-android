@@ -164,11 +164,11 @@ export default function CarCurrentStatus(props) {
         }
       />
       <MyItemList
-        itemName={t('start_time')}
+        itemName={t('current_slot')}
         value={
           activeRecord
-            ? format(Date.parse(activeRecord.startDate), 'dd/MM/yy HH:mm')
-            : '--/--/-- --:--'
+            ? getRecordStatus(activeRecord.slot)
+            : t('no_available')
         }
       />
       <MyItemList
