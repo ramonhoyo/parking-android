@@ -43,15 +43,7 @@ export default function EditScreen(props) {
   const add = async () => {
     try {
       setShowModal(true);
-      const {data} = await functions().httpsCallable('createVehicule')(
-        vehicule,
-      );
-      dispatch(
-        addVehicule({
-          ...vehicule,
-          id: data.id,
-        }),
-      );
+      await functions().httpsCallable('createVehicule')(vehicule);
       props.navigation.pop();
     } catch (e) {
       Alert.alert(t('error_creating_entry', {error: e}), t(e.code));
