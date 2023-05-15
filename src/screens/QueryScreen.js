@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,16 +7,23 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useSelector } from 'react-redux';
 import MyCardView from '../components/CardView';
 import CircleCard from '../components/CircleCard';
 import MyButton from '../components/MyButton';
 import { white } from '../data/consts';
+import { useTranslation } from 'react-multi-lang';
 
 /**
  * @brief Pagina para verificar si existen puestos disponibles en el estacionamiento
  * @returns retorna un ReactNode
  */
 export default function QueryScreen() {
+  const t = useTranslation();
+  const { slots } = useSelector(state => state.app);
+  const avaivableSlots = slots.filter(it => !it.vehicule);
+
+
   return (
     <ScrollView style={styles.root}>
       <View style={styles.container}>
@@ -26,11 +33,12 @@ export default function QueryScreen() {
           <CircleCard>
             <Icon name="check" size={36} color={white} />
           </CircleCard>
-          <Text style={styles.text}>Actualmente tenemos 10 puestos disponibles</Text>
+          <Text style={styles.text}>{t('available_slots_count',  {count: `${avaivableSlots.length}`})}</Text>
         </MyCardView>
 
         <MyButton
           style={styles.payButton}
+          disabled={!Boolean(avaivableSlots.length)}
           text="Solicitar puesto"
           onPress={() => {  }}
         />
