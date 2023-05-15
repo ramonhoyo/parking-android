@@ -59,8 +59,13 @@ npx react-native bundle --platform android --dev false --entry-file index.js --b
 
 #### Generate debug APK (win)
 
-cd android
 
 ```
+cd android
 .\gradlew.bat assembleRelease
 ```
+
+#### Errores generando APK
+
+
+- **Duplicated Resources**: Borrar las imagenes dentro de las carpetas android/app/src/res/drawable* y volver a ejectuar el comando .\gradlew.bat assembleRelease
