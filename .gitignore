@@ -64,3 +64,4 @@ yarn-error.log
 
 *node_modules_react*
 *.bundle
+android/app/google-services.json

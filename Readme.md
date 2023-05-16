@@ -28,6 +28,7 @@ This application is meant to work with a rasberry device installed on the parkin
 ---
 
   - setup react-native enviroment: https://reactnative.dev/docs/environment-setup
+  - Put a valid google-services.json at android/app/ directory
 
 
 ### Install and start application
