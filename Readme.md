@@ -1,71 +1,67 @@
-### Prerequisites
+## Uppita Parking
+---
 
-  Configuración de enviroment para correr apps react native en Windows:
-  https://reactnative.dev/docs/environment-setup
+Showcase react-native application, for allowing parking operation such as.
+
+- Register vehicules.
+- Get into a parking.
+- Select a parking slot.
+- Confirm slot.
+- Compute payment based on entry date and hourly rate price.
+- Perform a payment (Testing) using Stripe platform.
+- Documentation: In spanish (requested by client).
+
+
+This application is meant to work with a rasberry device installed on the parking, but the application has options to emulate those functions.
+
+### Implementations:
+---
+
+  - **react-native**: This application is a react-native project written in Javascript.
+  - **Firebase**:   This application uses Firebase services (Firestore, Functions, Autentication).
+  - **Google signin**   This application allows signin with Google Account.
+  - **Stripe**:   This application has an Stripe integration.
+  - **Google Maps**: This application used google maps, as well **Directions API**.
+
+
+### Prerequisites
+---
+
+  - setup react-native enviroment: https://reactnative.dev/docs/environment-setup
+
+
+### Install and start application
+---
 
 ```
   npm install
   npx react-native run-android
 ```
 
-### usefull commands
-
-Start Metro
-
-```
-  npx react-native start
-  npx react-native start --reset-cache // <--- clear metro cacje
-```
-
-Start your application
-
-```
-  npx react-native run-android
-```
-
-#### Go to Settings -> Debug server host & port for device (in normal behavior this step is not required)
-
-- Set ip of host server (you can take it from `ipconfig` commad).
-- Set port 8081
-  e.g 192.168.1.1:8081
-
-### Setup app to point to local firebase server  (in normal behavior this step is not required)
-
-- Change 192.168.1.9 to ip of host server
-
-```
-// Use a local emulator in development
-if (__DEV__) {
-functions().useFunctionsEmulator('http://192.168.1.9:5000');
-}
-```
-
-#### troubleshooting running app
-
-- Clean android project, repeat after sucessfull clean
-  ```
-  cd android
-  .\gradlew.bat clean
-  ```
-
 ### Generate APK (Windows)
+---
 
-#### Generate bundle js
-
+Generate release bundle
 ```
 npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
 ```
 
-
-#### Generate debug APK (win)
-
-
+Generate release apk
 ```
 cd android
 .\gradlew.bat assembleRelease
 ```
 
-#### Errores generando APK
+### Troubleshooting
+---
 
+#### **Unable to run aplication**
+try to clean android project, repeat until get a sucessfull clean
 
-- **Duplicated Resources**: Borrar las imagenes dentro de las carpetas android/app/src/res/drawable* y volver a ejectuar el comando .\gradlew.bat assembleRelease
+  ```
+  cd android
+  .\gradlew.bat clean
+  ```
+
+#### **Duplicated Resources** 
+when building final release apk: delete all images in **android/app/src/res/drawable\*** and repeat step "Generate APK"
