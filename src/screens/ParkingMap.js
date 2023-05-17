@@ -34,9 +34,10 @@ import ProcessModal from '../components/ProcessModal';
 import Geolocation from 'react-native-geolocation-service';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import OptionsMenu from 'react-native-option-menu';
+import Config from "react-native-config";
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyDReKvswx1eJLH3J5mdavJrPOGL8fzSNTA';
 enableLatestRenderer();
+
 var polyline = require('@mapbox/polyline');
 const geolib = require('geolib');
 
@@ -128,9 +129,7 @@ export default function ParkingMap(props) {
    */
   const getDirections = async (begin, end) => {
     try {
-      const ulr = `https://maps.googleapis.com/maps/api/directions/json?origin=${formatPoint(
-        begin,
-      )}&destination=${formatPoint(end)}&key=${GOOGLE_MAPS_APIKEY}`;
+      const ulr = `https://maps.googleapis.com/maps/api/directions/json?origin=${formatPoint(begin)}&destination=${formatPoint(end)}&key=${Config.GOOGLE_MAPS_API_KEY}`;
       const resp = await fetch(ulr);
       const respJson = await resp.json();
       if (respJson.status === 'REQUEST_DENIED') {

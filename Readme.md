@@ -29,9 +29,12 @@ This application is meant to work with a rasberry device installed on the parkin
 
   - setup react-native enviroment: https://reactnative.dev/docs/environment-setup
   - Put a valid google-services.json at android/app/ directory
+  - create a .env file based on .env.template
+  - setup your Google Maps API key in the .env file
+  - you're setup and ready to go :)
 
 
-### Install and start application
+### Install and run
 ---
 
 ```
