@@ -100,9 +100,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.uppita.parking"
+    namespace "com.upiita.parking"
     defaultConfig {
-        applicationId "com.uppita.parking"
+        applicationId "com.upiita.parking"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

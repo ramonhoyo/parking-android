@@ -1,4 +1,4 @@
-package com.uppita.parking;
+package com.upiita.parking;
 
 import android.os.Bundle;
 

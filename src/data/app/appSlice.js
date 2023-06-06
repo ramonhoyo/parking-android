@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const defaultState = {
   records: [],
   slots: [],
-  vehicules: [],
-  vehicule: null,
+  vehiculos: [],
+  vehiculo: null,
   user: null,
   car_status: {
     status: 'inactivo',
@@ -27,37 +27,37 @@ const slice = createSlice({
   initialState: defaultState,
   reducers: {
     setCarLocation: (state, action) => { state.car_status.location = action.payload; },
-    addVehicule: (state, action) => {
-      state.vehicules.push(action.payload);
+    addVehiculo: (state, action) => {
+      state.vehiculos.push(action.payload);
     },
-    setVehicules: (state, action) => {
-      state.vehicules = action.payload;
-      const currentVehicule = action.payload.find(item => item.current);
-      if (currentVehicule) {
-        state.vehicule = currentVehicule;
+    setVehiculos: (state, action) => {
+      state.vehiculos = action.payload;
+      const currentVehiculo = action.payload.find(item => item.current);
+      if (currentVehiculo) {
+        state.vehiculo = currentVehiculo;
       }
     },
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    removeVehicule: (state, action) => {
-      state.vehicules = state.vehicules.filter(item => item.id !== action.payload.id);
+    removeVehiculo: (state, action) => {
+      state.vehiculos = state.vehiculos.filter(item => item.id !== action.payload.id);
     },
-    updateVehicule: (state, action) => {
-      state.vehicules = state.vehicules.map(item => {
+    updateVehiculo: (state, action) => {
+      state.vehiculos = state.vehiculos.map(item => {
         return item.id !== action.payload.id ? item : {
           ...item,
           ...action.payload,
         };
       });
-      const currentVehicule = state.vehicules.find(item => item.id === action.payload.id);
-      if (currentVehicule) {
-        state.vehicule = currentVehicule;
+      const currentVehiculo = state.vehiculos.find(item => item.id === action.payload.id);
+      if (currentVehiculo) {
+        state.vehiculo = currentVehiculo;
       }
     },
-    setVehiculeAsCurrent: (state, action) => {
+    setVehiculoAsCurrent: (state, action) => {
       let current = null;
-      state.vehicules = state.vehicules.map(item => {
+      state.vehiculos = state.vehiculos.map(item => {
         const newItemState = {
           ...item,
           current: action.payload.id === item.id,
@@ -68,7 +68,7 @@ const slice = createSlice({
         return newItemState;
       });
       if (current) {
-        state.vehicule = current;
+        state.vehiculo = current;
       }
     },
     setSlots: (state, action) => {
@@ -100,12 +100,12 @@ const slice = createSlice({
 export default slice.reducer;
 export const {
   setCarLocation,
-  addVehicule,
-  setVehicules,
+  addVehiculo,
+  setVehiculos,
   setUser,
-  removeVehicule,
-  updateVehicule,
-  setVehiculeAsCurrent,
+  removeVehiculo,
+  updateVehiculo,
+  setVehiculoAsCurrent,
   setSlots,
   setRecords,
   addRecord,

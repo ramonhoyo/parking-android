@@ -1,4 +1,4 @@
-package com.uppita.parking;
+package com.upiita.parking;
 
 import android.app.Application;
 
@@ -9,7 +9,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
-import com.uppita.ReactNativeFlipper;
+import com.upiita.ReactNativeFlipper;
 
 import java.util.List;
 
