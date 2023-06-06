@@ -1,17 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, StyleSheet, StatusBar, ScrollView} from 'react-native';
-import {useStripe} from '@stripe/stripe-react-native';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { View, Text, StyleSheet, StatusBar, ScrollView } from 'react-native';
+import { useStripe } from '@stripe/stripe-react-native';
 import MyCardView from '../components/CardView';
 import CircleCard from '../components/CircleCard';
 import MyItemList from '../components/MyItemList';
-import {useTranslation} from 'react-multi-lang';
+import { useTranslation } from 'react-multi-lang';
 import MyButton from '../components/MyButton';
-import {RECORDS_STATUS, SLOT_STATUS, VEHICULE_STATUS} from '../data/consts';
-import {differenceInHours, format} from 'date-fns';
-import {Alert} from 'react-native';
+import { RECORDS_STATUS, SLOT_STATUS, VEHICULO_STATUS } from '../data/consts';
+import { differenceInHours, format } from 'date-fns';
+import { Alert } from 'react-native';
 import functions from '@react-native-firebase/functions';
-import {updateVehicule} from '../data/app/appSlice';
+import { updateVehiculo } from '../data/app/appSlice';
 
 /**
  * @brief Página para realizar el pago de la deuda total
@@ -21,9 +21,9 @@ import {updateVehicule} from '../data/app/appSlice';
 export default function PaymentTicketScreen(props) {
   const t = useTranslation();
   const dispatch = useDispatch();
-  const {initPaymentSheet, presentPaymentSheet} = useStripe();
-  const {user} = useSelector(state => state.app);
-  const {car_status, records, vehicule} = useSelector(state => state.app);
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const { user } = useSelector(state => state.app);
+  const { car_status, records, vehiculo } = useSelector(state => state.app);
 
   const [loading, setLoading] = useState(false);
   const [rasberryEmulation, setRasberryEmulation] = useState(false);
@@ -32,7 +32,7 @@ export default function PaymentTicketScreen(props) {
   const amount = !record
     ? 0
     : (differenceInHours(Date.now(), Date.parse(record.startDate)) + 1) *
-      record.rate;
+    record.rate;
 
   /**
    * emula el rasberry para cambiar nuevamente el estado del slot al completar el pago y colocarlo en "IDLE"
@@ -55,16 +55,16 @@ export default function PaymentTicketScreen(props) {
    * Muestra un modal para que el usuario introduzca los datos de su tarjeta para realizar el pago
    */
   const handleCardPayPress = async () => {
-    const {error} = await presentPaymentSheet();
+    const { error } = await presentPaymentSheet();
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
       return;
     }
     emulateRasberryCall();
     dispatch(
-      updateVehicule({
-        ...vehicule,
-        status: VEHICULE_STATUS.IDLE,
+      updateVehiculo({
+        ...vehiculo,
+        status: VEHICULO_STATUS.IDLE,
         entryDate: Date.now(),
       }),
     );
@@ -72,17 +72,17 @@ export default function PaymentTicketScreen(props) {
   };
 
   const fetchPaymentSheetParams = async () => {
-    const {data} = await functions().httpsCallable('createPaymentSheet')({
+    const { data } = await functions().httpsCallable('createPaymentSheet')({
       record: record ? record.id : null,
     });
     return data;
   };
 
   const initializePaymentSheet = async () => {
-    const {paymentIntent, ephemeralKey, customer, publishableKey} =
+    const { paymentIntent, ephemeralKey, customer, publishableKey } =
       await fetchPaymentSheetParams();
 
-    const {error} = await initPaymentSheet({
+    const { error } = await initPaymentSheet({
       merchantDisplayName: 'Upiita Parking',
       customerId: customer,
       customerEphemeralKeySecret: ephemeralKey,
@@ -124,10 +124,10 @@ export default function PaymentTicketScreen(props) {
             }).format(amount)}`}</Text>
           </CircleCard>
           <MyItemList itemName={t('currency')} value="MXN" />
-          <MyItemList itemName={t('matricule')} value={vehicule.matricule} />
+          <MyItemList itemName={t('matricula')} value={vehiculo.matricula} />
           <MyItemList itemName={t('owner')} value={user.displayName} />
-          <MyItemList itemName={t('fabricant')} value={vehicule.fabricant} />
-          <MyItemList itemName={t('model')} value={vehicule.model} />
+          <MyItemList itemName={t('fabricante')} value={vehiculo.fabricante} />
+          <MyItemList itemName={t('modelo')} value={vehiculo.modelo} />
           <MyItemList
             itemName={t('start_time')}
             value={

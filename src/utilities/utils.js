@@ -1,18 +1,18 @@
-import {t} from 'react-multi-lang';
-import {ERRORS, RECORDS_STATUS, VEHICULE_STATUS} from '../data/consts';
+import { t } from 'react-multi-lang';
+import { ERRORS, RECORDS_STATUS, VEHICULO_STATUS } from '../data/consts';
 
 /**
  * @brief formatea el estatus de un vehiculo a un texto legible
- * @param {VEHICULE_STATUS} status estatus del vehiculo
+ * @param {VEHICULO_STATUS} status estatus del vehiculo
  * @returns estatus como texto
  */
-export const getVehiculeStateText = status => {
+export const getVehiculoStateText = status => {
   switch (status) {
-    case VEHICULE_STATUS.IDLE:
+    case VEHICULO_STATUS.IDLE:
       return t('idle');
-    case VEHICULE_STATUS.DELETED:
+    case VEHICULO_STATUS.DELETED:
       return t('deleted');
-    case VEHICULE_STATUS.IN_RECORD:
+    case VEHICULO_STATUS.IN_RECORD:
       return t('in_record');
     default:
       return t('unhandled_status');

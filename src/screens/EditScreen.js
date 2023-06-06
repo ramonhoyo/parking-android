@@ -1,40 +1,40 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {useState} from 'react';
-import {StyleSheet, StatusBar, Image, Text, Alert} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { StyleSheet, StatusBar, Image, Text, Alert } from 'react-native';
 import MyTextInput from '../components/MyTextInput';
 import MyButton from '../components/MyButton';
-import {primaryColor} from '../data/consts';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import { primaryColor } from '../data/consts';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {
-  addVehicule,
-  removeVehicule,
-  updateVehicule,
-  setVehiculeAsCurrent,
+  addVehiculo,
+  removeVehiculo,
+  updateVehiculo,
+  setVehiculoAsCurrent,
 } from '../data/app/appSlice';
 import MyItemList from '../components/MyItemList';
 import firebase from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
-import {useTranslation} from 'react-multi-lang';
+import { useTranslation } from 'react-multi-lang';
 import ProcessModal from '../components/ProcessModal';
 
 /**
  * @brief Pagina para agregar/editar información de un vehiculo
  */
 export default function EditScreen(props) {
-  const {initialState} = props.route.params;
-  const {user, vehicules} = useSelector(state => state.app);
+  const { initialState } = props.route.params;
+  const { user, vehiculos } = useSelector(state => state.app);
   const dispatch = useDispatch();
   const t = useTranslation();
   const [showModal, setShowModal] = useState(false);
 
-  const [vehicule, setVehicule] = useState({
-    matricule: initialState ? initialState.matricule : '',
-    fabricant: initialState ? initialState.fabricant : '',
-    model: initialState ? initialState.model : '',
+  const [vehiculo, setVehiculo] = useState({
+    matricula: initialState ? initialState.matricula : '',
+    fabricante: initialState ? initialState.fabricante : '',
+    modelo: initialState ? initialState.modelo : '',
     status: initialState ? initialState.status : 0,
     owner: user.uid,
-    current: initialState ? initialState.current : !vehicules.length,
+    current: initialState ? initialState.current : !vehiculos.length,
   });
 
   /**
@@ -43,10 +43,11 @@ export default function EditScreen(props) {
   const add = async () => {
     try {
       setShowModal(true);
-      await functions().httpsCallable('createVehicule')(vehicule);
+      await functions().httpsCallable('createVehiculo')(vehiculo);
       props.navigation.pop();
     } catch (e) {
-      Alert.alert(t('error_creating_entry', {error: e}), t(e.code));
+      Alert.alert(t('error_creating_entry', { error: e }), t(e.code));
+      //Alert.alert("Error", "llegue al error");
     } finally {
       setShowModal(false);
     }
@@ -58,20 +59,20 @@ export default function EditScreen(props) {
   const update = async () => {
     try {
       setShowModal(true);
-      await firebase().doc(`vehicules/${initialState.id}`).update({
-        fabricant: vehicule.fabricant,
-        model: vehicule.model,
+      await firebase().doc(`vehiculos/${initialState.id}`).update({
+        fabricante: vehiculo.fabricante,
+        modelo: vehiculo.modelo,
       });
       dispatch(
-        updateVehicule({
+        updateVehiculo({
           id: initialState.id,
-          fabricant: vehicule.fabricant,
-          model: vehicule.model,
+          fabricante: vehiculo.fabricante,
+          modelo: vehiculo.modelo,
         }),
       );
       props.navigation.pop();
     } catch (e) {
-      Alert.alert(t('error'), t('error_updating_entry', {error: e}));
+      Alert.alert(t('error'), t('error_updating_entry', { error: e }));
     } finally {
       setShowModal(false);
     }
@@ -90,8 +91,8 @@ export default function EditScreen(props) {
    * @param {any} value valor
    */
   const onChange = (field, value) => {
-    setVehicule({
-      ...vehicule,
+    setVehiculo({
+      ...vehiculo,
       [field]: value,
     });
   };
@@ -102,16 +103,16 @@ export default function EditScreen(props) {
   const handleUseAsCurrent = async () => {
     try {
       setShowModal(true);
-      await functions().httpsCallable('setVehiculeAsCurrent')({
-        vehicule: initialState.id,
+      await functions().httpsCallable('setVehiculoAsCurrent')({
+        vehiculo: initialState.id,
       });
-      dispatch(setVehiculeAsCurrent(initialState));
+      dispatch(setVehiculoAsCurrent(initialState));
       props.navigation.pop();
       Alert.alert('', t('success_change_as_current'));
     } catch (e) {
       Alert.alert(
         t('error'),
-        t('error_setting_vehicule_as_default', {error: e}),
+        t('error_setting_vehiculo_as_default', { error: e }),
       );
     } finally {
       setShowModal(false);
@@ -123,13 +124,13 @@ export default function EditScreen(props) {
    */
   const handleDelete = () => {
     Alert.alert(
-      t('delete_vehicule'),
-      t('are_you_sure_of_delete_this_vehicule'),
+      t('delete_vehiculo'),
+      t('are_you_sure_of_delete_this_vehiculo'),
       [
-        {text: t('cancel'), style: 'cancel'},
-        {text: 'OK', onPress: performDelete},
+        { text: t('cancel'), style: 'cancel' },
+        { text: 'OK', onPress: performDelete },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -139,13 +140,13 @@ export default function EditScreen(props) {
   const performDelete = async () => {
     try {
       setShowModal(true);
-      await firebase().doc(`vehicules/${initialState.id}`).update({
+      await firebase().doc(`vehiculos/${initialState.id}`).update({
         status: -1,
       });
-      dispatch(removeVehicule(initialState));
+      dispatch(removeVehiculo(initialState));
       props.navigation.pop();
     } catch (e) {
-      Alert.alert(t('error'), t('error_deleting_entry', {error: e}));
+      Alert.alert(t('error'), t('error_deleting_entry', { error: e }));
     } finally {
       setShowModal(false);
     }
@@ -162,25 +163,25 @@ export default function EditScreen(props) {
       />
       <MyTextInput
         style={styles.input}
-        placeholder={t('matricule')}
+        placeholder={t('matricula')}
         autoCapitalize="characters"
-        value={vehicule.matricule}
-        onChangeText={text => onChange('matricule', text)}
+        value={vehiculo.matricula}
+        onChangeText={text => onChange('matricula', text)}
         editable={!initialState}
       />
       <MyTextInput
         style={styles.input}
-        placeholder={t('fabricant')}
+        placeholder={t('fabricante')}
         autoCapitalize="characters"
-        value={vehicule.fabricant}
-        onChangeText={text => onChange('fabricant', text)}
+        value={vehiculo.fabricante}
+        onChangeText={text => onChange('fabricante', text)}
       />
       <MyTextInput
         style={styles.input}
-        placeholder={t('model')}
+        placeholder={t('modelo')}
         autoCapitalize="characters"
-        value={vehicule.model}
-        onChangeText={text => onChange('model', text)}
+        value={vehiculo.modelo}
+        onChangeText={text => onChange('modelo', text)}
       />
 
       <Text>{'\n'}</Text>
@@ -190,7 +191,7 @@ export default function EditScreen(props) {
         value={initialState ? initialState.status : '-'}
       />
 
-      {!vehicule.current && !!initialState && (
+      {!vehiculo.current && !!initialState && (
         <MyButton
           type="secondary"
           text={t('use_as_current')}
@@ -199,10 +200,10 @@ export default function EditScreen(props) {
         />
       )}
 
-      {!!initialState && !vehicule.status && (
+      {!!initialState && !vehiculo.status && (
         <MyButton
           type="secondary"
-          text={t('delete_vehicule')}
+          text={t('delete_vehiculo')}
           style={styles.btn}
           onPress={handleDelete}
         />
@@ -212,7 +213,7 @@ export default function EditScreen(props) {
         text={t('save')}
         style={styles.btn}
         onPress={handleSave}
-        disabled={!vehicule.matricule || !vehicule.fabricant || !vehicule.model}
+        disabled={!vehiculo.matricula || !vehiculo.fabricante || !vehiculo.modelo}
       />
 
       {showModal && <ProcessModal visible={showModal} />}

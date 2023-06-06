@@ -21,7 +21,7 @@ import { useTranslation } from 'react-multi-lang';
 export default function QueryScreen() {
   const t = useTranslation();
   const { slots } = useSelector(state => state.app);
-  const avaivableSlots = slots.filter(it => !it.vehicule);
+  const avaivableSlots = slots.filter(it => !it.vehiculo);
 
 
   return (
@@ -33,14 +33,14 @@ export default function QueryScreen() {
           <CircleCard>
             <Icon name="check" size={36} color={white} />
           </CircleCard>
-          <Text style={styles.text}>{t('available_slots_count',  {count: `${avaivableSlots.length}`})}</Text>
+          <Text style={styles.text}>{t('available_slots_count', { count: `${avaivableSlots.length}` })}</Text>
         </MyCardView>
 
         <MyButton
           style={styles.payButton}
           disabled={!Boolean(avaivableSlots.length)}
           text="Solicitar puesto"
-          onPress={() => {  }}
+          onPress={() => { }}
         />
       </View>
     </ScrollView>

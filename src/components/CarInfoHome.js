@@ -1,49 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import MyItemList from './MyItemList';
 import CardView from './CardView';
 import MyButton from './MyButton';
-import {View, Text, StyleSheet} from 'react-native';
-import {useTranslation} from 'react-multi-lang';
-import {getVehiculeStateText} from '../utilities/utils';
-import {format} from 'date-fns';
+import { View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-multi-lang';
+import { getVehiculoStateText } from '../utilities/utils';
+import { format } from 'date-fns';
 
 export default function CarInfoHome(props) {
-  const {vehicule, vehicules} = useSelector(state => state.app);
+  const { vehiculo, vehiculos } = useSelector(state => state.app);
   const t = useTranslation();
 
   return (
-    <CardView style={{...styles.root, ...props.style}}>
+    <CardView style={{ ...styles.root, ...props.style }}>
       <View style={styles.itemsContainer}>
-        <Text style={styles.title}>{t('my_vehicules')}</Text>
-        <MyItemList itemName={t('vehicules_length')} value={vehicules.length} />
+        <Text style={styles.title}>{t('my_vehiculos')}</Text>
+        <MyItemList itemName={t('vehiculos_length')} value={vehiculos.length} />
         <MyItemList
-          itemName={t('current_vehicule')}
-          value={vehicule ? vehicule.matricule : '-'}
+          itemName={t('current_vehiculo')}
+          value={vehiculo ? vehiculo.matricula : '-'}
         />
         <MyItemList
           itemName={t('start_time')}
           value={
-            vehicule && vehicule.entryDate
-              ? format(vehicule.entryDate, 'dd/MM/yy HH:mm')
+            vehiculo && vehiculo.entryDate
+              ? format(vehiculo.entryDate, 'dd/MM/yy HH:mm')
               : '--/--/-- --:--'
           }
         />
         <MyItemList
           itemName={t('last_payment_date')}
           value={
-            vehicule && vehicule.lastPaymentDate
-              ? format(vehicule.lastPaymentDate, 'dd/MM/yy HH:mm')
+            vehiculo && vehiculo.lastPaymentDate
+              ? format(vehiculo.lastPaymentDate, 'dd/MM/yy HH:mm')
               : '--/--/-- --:--'
           }
         />
         <MyItemList
           itemName={t('state')}
-          value={vehicule ? getVehiculeStateText(vehicule.status) : '-'}
+          value={vehiculo ? getVehiculoStateText(vehiculo.status) : '-'}
         />
         <MyButton
-          text={t('manage_vehicules')}
+          text={t('manage_vehiculos')}
           style={styles.editButton}
           onPress={props.onEditClick}
         />

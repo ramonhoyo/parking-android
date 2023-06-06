@@ -1,9 +1,9 @@
-## Uppita Parking
+## UPIITA Parking
 ---
 
 Showcase react-native application, for allowing parking operation such as.
 
-- Register vehicules.
+- Register vehiculos.
 - Get into a parking.
 - Select a parking slot.
 - Confirm slot.
@@ -40,7 +40,7 @@ This application is meant to work with a rasberry device installed on the parkin
 ```
   npm install
   npx react-native run-android
-```
+  adb shell input keyevent 82
 
 ### Generate APK (Windows)
 ---

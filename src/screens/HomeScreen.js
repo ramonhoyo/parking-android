@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   View,
@@ -11,13 +11,13 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
-import {beginColor, endColor, white} from '../data/consts';
+import { beginColor, endColor, white } from '../data/consts';
 import CarInfoHome from '../components/CarInfoHome';
 import CarCurrentStatus from '../components/CarCurrentStatus';
 import HomeOptionsCard from '../components/HomeOptionsCard';
-import {GoogleSignin} from 'react-native-google-signin';
-import {logout} from '../data/auth/authSlice';
-import {useTranslation} from 'react-multi-lang';
+import { GoogleSignin } from 'react-native-google-signin';
+import { logout } from '../data/auth/authSlice';
+import { useTranslation } from 'react-multi-lang';
 
 /**
  * @brief Pantalla principal de la aplicación una vez se ha ingresado con credenciales
@@ -33,8 +33,8 @@ export default function HomeScreen(props) {
    */
   const handleLogout = async () => {
     Alert.alert(t('logout'), t('are_you_sure_of_logout'), [
-      {text: t('no'), style: 'cancel'},
-      {text: t('yes'), onPress: confirmLogout},
+      { text: t('no'), style: 'cancel' },
+      { text: t('yes'), onPress: confirmLogout },
     ]);
   };
 
@@ -47,7 +47,7 @@ export default function HomeScreen(props) {
       }
       dispatch(logout());
     } catch (e) {
-      Alert.alert('', t('error_logout_fail', {error: e}));
+      Alert.alert('', t('error_logout_fail', { error: e }));
     }
   };
 
@@ -69,11 +69,11 @@ export default function HomeScreen(props) {
         style={styles.logout}
         onPress={handleLogout}
       />
-      <Text style={styles.title}>{t('UPPITA_parking')}</Text>
+      <Text style={styles.title}>{t('UPIITA_parking')}</Text>
       <View style={styles.wrapper}>
         <ScrollView style={styles.scroll}>
           <CarInfoHome
-            onEditClick={() => props.navigation.navigate('ManageVehicules')}
+            onEditClick={() => props.navigation.navigate('ManageVehiculos')}
           />
           <CarCurrentStatus
             style={styles.carStatusCar}

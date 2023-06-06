@@ -22,11 +22,11 @@ export default function About(props) {
       <Text style={styles.content}>{content}</Text>
       <Text style={styles.title}>{t('authors')}</Text>
 
-      <Text style={styles.name}>{t('author', { author: 1 })}</Text>
-      <Text style={styles.email}>{t('author_email', { author: 1 })}</Text>
-      <Text style={styles.name}>{t('author', { author: 2 })}</Text>
-      <Text style={styles.email}>{t('author_email', { author: 2 })}</Text>
-      <MyButton style={styles.button} text={t('see_credits')}
+      <Text style={styles.name}>{t('author1', { author: 1 })}</Text>
+      <Text style={styles.email}>{t('author_email1', { author: 1 })}</Text>
+      <Text style={styles.name}>{t('author2', { author: 2 })}</Text>
+      <Text style={styles.email}>{t('author_email2', { author: 2 })}</Text>
+      <MyButton style={styles.button} text={t('see_credit')}
         onPress={() => { props.navigation.navigate('Licences'); }}
       />
     </View>
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed luctus odio. Vivamus a mauris metus. Ut ut condimentum orci. Praesent feugiat diam pellentesque egestas egestas. Mauris eu nunc at lacus efficitur porta eu nec purus. Duis sed volutpat quam. Aliquam erat volutpat. Curabitur suscipit faucibus augue quis bibendum. Donec venenatis sagittis velit quis tempus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam viverra vehicula dui, non dictum risus lacinia mollis.';
+const content = 'Test ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed luctus odio. Vivamus a mauris metus. Ut ut condimentum orci. Praesent feugiat diam pellentesque egestas egestas. Mauris eu nunc at lacus efficitur porta eu nec purus. Duis sed volutpat quam. Aliquam erat volutpat. Curabitur suscipit faucibus augue quis bibendum. Donec venenatis sagittis velit quis tempus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Etiam viverra vehicula dui, non dictum risus lacinia mollis.';

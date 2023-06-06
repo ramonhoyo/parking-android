@@ -21,7 +21,7 @@ import PaymentResultScreen from './src/screens/PaymentResultScreen';
 import About from './src/screens/About';
 import Licences from './src/screens/Licences';
 import ParkingMap from './src/screens/ParkingMap';
-import ManageVehicules from './src/screens/ManageVehicules';
+import ManageVehiculos from './src/screens/ManageVehiculos';
 import LoginScreen from './src/screens/LoginScreen';
 import PermissionsScreen from './src/screens/PermissionsScreen';
 import SplashScreen from './src/screens/SplashScreen';
@@ -36,7 +36,7 @@ import {
   setRecords,
   setSlots,
   setUser,
-  setVehicules,
+  setVehiculos,
 } from './src/data/app/appSlice';
 import { Alert } from 'react-native/Libraries/Alert/Alert';
 import { setAuthId, setIsLoading } from './src/data/auth/authSlice';
@@ -46,18 +46,20 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 // Do this two lines only when setting up the application
 setTranslations({ es });
 setDefaultLanguage('es');
-/*
+
 if (__DEV__) {
   // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
-  functions().useEmulator('localhost', 5002);
+  //functions().useEmulator('192.168.1.92', 5002);
+  //functions().useEmulator('localhost', 5002);
+
 }
-*/
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const state = useSelector(_state => _state);
   const { isLoading, authId } = state.auth;
-  const { user, vehicule, permissions } = state.app;
+  const { user, vehiculo, permissions } = state.app;
   const dispatch = useDispatch();
   const t = useTranslation();
   const MainStack = (
@@ -72,8 +74,8 @@ const App = () => {
         component={EditScreen}
         options={({ route }) => ({
           title: route.params.initialState
-            ? t('edit_vehicule')
-            : t('add_vehicule'),
+            ? t('edit_vehiculo')
+            : t('add_vehiculo'),
         })}
       />
       <Stack.Screen
@@ -107,9 +109,9 @@ const App = () => {
         options={{ title: t('parking') }}
       />
       <Stack.Screen
-        name="ManageVehicules"
-        component={ManageVehicules}
-        options={{ title: t('manage_vehicules') }}
+        name="ManageVehiculos"
+        component={ManageVehiculos}
+        options={{ title: t('manage_vehiculos') }}
       />
     </Stack.Navigator>
   );
@@ -200,8 +202,8 @@ const App = () => {
       dispatch(setUser(null));
       return;
     }
-    const vehiculesUnsubscriber = firestore()
-      .collection('vehicules')
+    const vehiculosUnsubscriber = firestore()
+      .collection('vehiculos')
       .where('owner', '==', authId)
       .where('status', '>=', 0)
       .onSnapshot(snapshot => {
@@ -209,7 +211,7 @@ const App = () => {
           return;
         }
         dispatch(
-          setVehicules(
+          setVehiculos(
             snapshot.docs.map(docSnapshot => {
               const data = docSnapshot.data();
               return {
@@ -238,25 +240,25 @@ const App = () => {
 
     return () => {
       userUnsubscriber();
-      vehiculesUnsubscriber();
+      vehiculosUnsubscriber();
     };
   }, [authId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (!vehicule) {
+    if (!vehiculo) {
       return;
     }
     (async () => {
       try {
         const { data } = await functions().httpsCallable('getRecords')({
-          vehicule: vehicule.id,
+          vehiculo: vehiculo.id,
         });
         dispatch(setRecords(data));
       } catch (e) {
         Alert.alert(t(e.code), t(e.message));
       }
     })();
-  }, [vehicule]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [vehiculo]); // eslint-disable-line react-hooks/exhaustive-deps
 
   let stack = null;
   if (permissions.location !== RESULTS.GRANTED) {

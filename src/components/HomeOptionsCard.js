@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import CardView from './CardView';
 import MyCircularIconButton from './CircularIconButton';
-import {useTranslation} from 'react-multi-lang';
-import {useSelector} from 'react-redux';
+import { useTranslation } from 'react-multi-lang';
+import { useSelector } from 'react-redux';
 
 export default function HomeOptionsCard(props) {
   const t = useTranslation();
-  const {vehicule} = useSelector(state => state.app);
+  const { vehiculo } = useSelector(state => state.app);
   return (
-    <CardView style={{...styles.root, ...props.style}}>
+    <CardView style={{ ...styles.root, ...props.style }}>
       <MyCircularIconButton
         icon_name="search"
         text={t('query')}
@@ -20,7 +20,7 @@ export default function HomeOptionsCard(props) {
         icon_name="car"
         text={t('start_park')}
         onPress={props.onParkingClick}
-        disabled={!vehicule}
+        disabled={!vehiculo}
       />
       <MyCircularIconButton
         icon_name="thumbs-up"

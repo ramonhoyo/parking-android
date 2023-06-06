@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
   StyleSheet,
@@ -12,22 +12,22 @@ import {
 import CardView from './CardView';
 import MyButton from './MyButton';
 import MyItemList from './MyItemList';
-import {useTranslation} from 'react-multi-lang';
-import {getRecordStatus} from '../utilities/utils';
-import {differenceInHours, format} from 'date-fns';
+import { useTranslation } from 'react-multi-lang';
+import { getRecordStatus } from '../utilities/utils';
+import { differenceInHours, format } from 'date-fns';
 import {
   primaryColor,
   RECORDS_STATUS,
   SLOT_STATUS,
-  VEHICULE_STATUS,
+  VEHICULO_STATUS,
 } from '../data/consts';
 import functions from '@react-native-firebase/functions';
-import {setVehicules, updateRecord, updateVehicule} from '../data/app/appSlice';
+import { setVehiculos, updateRecord, updateVehiculo } from '../data/app/appSlice';
 import ProcessModal from './ProcessModal';
 
 export default function CarCurrentStatus(props) {
   const dispatch = useDispatch();
-  const {records, vehicules, slots, vehicule} = useSelector(state => state.app);
+  const { records, vehiculos, slots, vehiculo } = useSelector(state => state.app);
   const t = useTranslation();
   const activeRecord = records.length ? records[0] : null;
   const [showModal, setShowModal] = useState(false);
@@ -52,12 +52,12 @@ export default function CarCurrentStatus(props) {
       });
       Alert.alert('', t('record_annuled'));
       dispatch(
-        setVehicules(
-          vehicules.map(item => {
-            if (item.id === activeRecord.vehicule) {
+        setVehiculos(
+          vehiculos.map(item => {
+            if (item.id === activeRecord.vehiculo) {
               return {
                 ...item,
-                status: VEHICULE_STATUS.IDLE,
+                status: VEHICULO_STATUS.IDLE,
               };
             }
             return item;
@@ -76,10 +76,10 @@ export default function CarCurrentStatus(props) {
       t('annul_record'),
       t('are_you_sure_of_annul_record'),
       [
-        {text: t('cancel'), style: 'cancel'},
-        {text: 'OK', onPress: handleAnnulReservation},
+        { text: t('cancel'), style: 'cancel' },
+        { text: 'OK', onPress: handleAnnulReservation },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -96,9 +96,9 @@ export default function CarCurrentStatus(props) {
         }),
       );
       dispatch(
-        updateVehicule({
-          ...vehicule,
-          status: VEHICULE_STATUS.IDLE,
+        updateVehiculo({
+          ...vehiculo,
+          status: VEHICULO_STATUS.IDLE,
         }),
       );
       Alert.alert(t('record_annuled'), t('select_another_slot'));
@@ -140,7 +140,7 @@ export default function CarCurrentStatus(props) {
     }
     setShowConfirmRecord(
       record.status === RECORDS_STATUS.RESERVED &&
-        slot.status === SLOT_STATUS.BUSSY,
+      slot.status === SLOT_STATUS.BUSSY,
     );
   }, [records, slots]);
 
@@ -184,10 +184,10 @@ export default function CarCurrentStatus(props) {
         value={
           amount
             ? `${Intl.NumberFormat('es-MX', {
-                style: 'currency',
-                currency: 'MXN',
-                maximumFractionDigits: 2,
-              }).format(amount)}`
+              style: 'currency',
+              currency: 'MXN',
+              maximumFractionDigits: 2,
+            }).format(amount)}`
             : t('no_available')
         }
       />

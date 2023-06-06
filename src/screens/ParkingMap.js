@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   StyleSheet,
@@ -20,15 +20,15 @@ import {
   parkingArea,
   RECORDS_STATUS,
   SLOT_STATUS,
-  VEHICULE_STATUS,
+  VEHICULO_STATUS,
 } from '../data/consts';
 import {
   setCarLocation,
-  setVehicules,
-  updateVehicule,
+  setVehiculos,
+  updateVehiculo,
 } from '../data/app/appSlice';
 import functions from '@react-native-firebase/functions';
-import {useTranslation} from 'react-multi-lang';
+import { useTranslation } from 'react-multi-lang';
 import MyButton from '../components/MyButton';
 import ProcessModal from '../components/ProcessModal';
 import Geolocation from 'react-native-geolocation-service';
@@ -51,9 +51,9 @@ const comparePositions = (f, s) =>
  * @returns retorna un ReactNode
  */
 export default function ParkingMap(props) {
-  const {navigation} = props;
+  const { navigation } = props;
   const t = useTranslation();
-  const {car_status, slots, records, vehicule, vehicules} = useSelector(
+  const { car_status, slots, records, vehiculo, vehiculos } = useSelector(
     state => state.app,
   );
   const dispatch = useDispatch();
@@ -81,16 +81,16 @@ export default function ParkingMap(props) {
     try {
       setShowModal(true);
       await functions().httpsCallable('reserveSlot')({
-        vehicule: vehicule.id,
+        vehiculo: vehiculo.id,
         slot: slot.id,
       });
       dispatch(
-        setVehicules(
-          vehicules.map(item => {
-            if (item.id === vehicule.id) {
+        setVehiculos(
+          vehiculos.map(item => {
+            if (item.id === vehiculo.id) {
               return {
                 ...item,
-                status: VEHICULE_STATUS.IN_RECORD,
+                status: VEHICULO_STATUS.IN_RECORD,
               };
             }
             return item;
@@ -109,16 +109,16 @@ export default function ParkingMap(props) {
    * - Se muestra un modal de confirmación para validar que desea usar ese puesto
    * @param {MarkerClickEvet} param
    */
-  const handleMarkerClick = ({nativeEvent}) => {
+  const handleMarkerClick = ({ nativeEvent }) => {
     let idx = slots.findIndex(item => {
       return (
         item.latitude === nativeEvent.coordinate.latitude &&
         item.longitude === nativeEvent.coordinate.longitude
       );
     });
-    Alert.alert(t('slot', {slot: idx + 1}), t('do_you_want_reserve_slot'), [
-      {text: t('no'), style: 'cancel'},
-      {text: t('yes'), onPress: () => handleReserveSlot(slots[idx])},
+    Alert.alert(t('slot', { slot: idx + 1 }), t('do_you_want_reserve_slot'), [
+      { text: t('no'), style: 'cancel' },
+      { text: t('yes'), onPress: () => handleReserveSlot(slots[idx]) },
     ]);
   };
 
@@ -155,7 +155,7 @@ export default function ParkingMap(props) {
    * de que el usuario desee usar google maps
    */
   const openExternalMaps = () => {
-    const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
     const latLng = `${selectedSlot.latitude},${selectedSlot.longitude}`;
     const label = t('park_slot');
     const url = Platform.select({
@@ -200,7 +200,7 @@ export default function ParkingMap(props) {
     if (askedForEmulation) {
       return;
     }
-    const startPoint = {latitude: 19.51082, longitude: -99.12669};
+    const startPoint = { latitude: 19.51082, longitude: -99.12669 };
     // Si la distancia entre el vehiculo y el destino es menor que 2 metros, detine la emulación y retorna
     const diff = geolib.getDistance(car_status.location, startPoint);
     if (!emulable && diff > 1000) {
@@ -359,13 +359,13 @@ export default function ParkingMap(props) {
   const emulateCarEntry = async () => {
     try {
       setShowModal(true);
-      await functions().httpsCallable('changeVehiculeStatus')({
-        matricule: vehicule.matricule,
+      await functions().httpsCallable('changeVehiculoStatus')({
+        matricula: vehiculo.matricula,
         status: 'entry',
       });
       dispatch(
-        updateVehicule({
-          ...vehicule,
+        updateVehiculo({
+          ...vehiculo,
           entryDate: Date.now(),
         }),
       );
@@ -380,13 +380,13 @@ export default function ParkingMap(props) {
   const emulateCarExit = async () => {
     try {
       setShowModal(true);
-      await functions().httpsCallable('changeVehiculeStatus')({
-        matricule: vehicule.matricule,
+      await functions().httpsCallable('changeVehiculoStatus')({
+        matricula: vehiculo.matricula,
         status: 'exit',
       });
       dispatch(
-        updateVehicule({
-          ...vehicule,
+        updateVehiculo({
+          ...vehiculo,
           exitDate: Date.now(),
         }),
       );
@@ -440,7 +440,7 @@ export default function ParkingMap(props) {
           let disabled =
             !!destination ||
             item.status !== SLOT_STATUS.IDLE ||
-            vehicule.status !== VEHICULE_STATUS.IDLE;
+            vehiculo.status !== VEHICULO_STATUS.IDLE;
           if (
             destination &&
             (destination.slot === item.id ||
