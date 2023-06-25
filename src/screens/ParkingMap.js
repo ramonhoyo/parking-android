@@ -361,7 +361,7 @@ export default function ParkingMap(props) {
       setShowModal(true);
       await functions().httpsCallable('changeVehiculoStatus')({
         matricula: vehiculo.matricula,
-        status: 'entry',
+        status: VEHICULO_STATUS.IN_RECORD,
       });
       dispatch(
         updateVehiculo({
@@ -382,7 +382,7 @@ export default function ParkingMap(props) {
       setShowModal(true);
       await functions().httpsCallable('changeVehiculoStatus')({
         matricula: vehiculo.matricula,
-        status: 'exit',
+        status: VEHICULO_STATUS.IDLE,
       });
       dispatch(
         updateVehiculo({
@@ -410,7 +410,6 @@ export default function ParkingMap(props) {
             t('emulate_car_entry'),
             t('emulate_car_exit'),
             t('clear_slot_data'),
-            t(''),
           ]}
           actions={[emulateCarEntry, emulateCarExit, clearSlotData]}
         />

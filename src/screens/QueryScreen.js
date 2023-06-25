@@ -36,12 +36,12 @@ export default function QueryScreen() {
           <Text style={styles.text}>{t('available_slots_count', { count: `${avaivableSlots.length}` })}</Text>
         </MyCardView>
 
-        <MyButton
+        {/*<MyButton
           style={styles.payButton}
           disabled={!Boolean(avaivableSlots.length)}
           text="Solicitar puesto"
           onPress={() => { }}
-        />
+        />*/}
       </View>
     </ScrollView>
 

@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

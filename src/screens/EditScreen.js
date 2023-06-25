@@ -186,10 +186,7 @@ export default function EditScreen(props) {
 
       <Text>{'\n'}</Text>
 
-      <MyItemList
-        itemName={t('status')}
-        value={initialState ? initialState.status : '-'}
-      />
+
 
       {!vehiculo.current && !!initialState && (
         <MyButton

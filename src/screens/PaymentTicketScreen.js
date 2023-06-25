@@ -83,7 +83,7 @@ export default function PaymentTicketScreen(props) {
       await fetchPaymentSheetParams();
 
     const { error } = await initPaymentSheet({
-      merchantDisplayName: 'Upiita Parking',
+      merchantDisplayName: 'UPIITA Parking',
       customerId: customer,
       customerEphemeralKeySecret: ephemeralKey,
       paymentIntentClientSecret: paymentIntent,

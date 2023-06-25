@@ -50,7 +50,7 @@ setDefaultLanguage('es');
 if (__DEV__) {
   // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
   //functions().useEmulator('192.168.1.92', 5002);
-  //functions().useEmulator('localhost', 5002);
+  functions().useEmulator('localhost', 5002);
 
 }
 

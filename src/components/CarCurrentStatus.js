@@ -200,7 +200,7 @@ export default function CarCurrentStatus(props) {
         />
       )}
 
-      {activeRecord && activeRecord.status === RECORDS_STATUS.CONFIRMED && (
+      {activeRecord && (activeRecord.status === RECORDS_STATUS.CONFIRMED || activeRecord.status === RECORDS_STATUS.RESERVED) && (
         <MyButton
           disabled={
             !activeRecord || activeRecord.status === RECORDS_STATUS.PAID
@@ -255,7 +255,8 @@ CarCurrentStatus.propTypes = {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: "bold",
   },
   buttonStyle: {
     marginTop: 20,
