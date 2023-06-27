@@ -48,8 +48,8 @@ setTranslations({ es });
 setDefaultLanguage('es');
 
 if (__DEV__) {
-  // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
-  //functions().useEmulator('192.168.1.92', 5002);
+  // If you are running on a physical device, replace localhost with the local ip of your PC, e.g. 192.168.0.103
+  // functions().useEmulator('192.168.0.103', 5000);
   functions().useEmulator('localhost', 5000);
 
 }
